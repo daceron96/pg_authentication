@@ -1,0 +1,21 @@
+##Spring Configuration
+server:
+  port: 8080
+spring:
+  application:
+    name: authentication
+  devtools:
+    add-properties: false
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  profiles:
+    include:
+  r2dbc:
+    url: r2dbc:postgresql://172.21.53.181:5432/authentication
+    username: admin_db
+    password: 960311
+    sql:
+      init:
+        mode: always
