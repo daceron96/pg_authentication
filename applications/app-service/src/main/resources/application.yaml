@@ -13,7 +13,10 @@ spring:
   profiles:
     include:
   r2dbc:
-    url: r2dbc:postgresql://172.21.53.181:5432/authentication
+    host: 172.21.53.181
+    port: 5432
+    database: authentication
+    schema: public
     username: admin_db
     password: 960311
     sql:

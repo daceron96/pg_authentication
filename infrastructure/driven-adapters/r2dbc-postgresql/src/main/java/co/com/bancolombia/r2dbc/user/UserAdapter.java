@@ -13,12 +13,11 @@ import reactor.core.publisher.Mono;
 public class UserAdapter implements UserRepositoryGetaway {
 
     private final UserRepository repository;
-    private final UserMapper mapper;
 
     @Override
     public Mono<User> save(User user){
-        return repository.save(mapper.toEntity(user))
-                .map(mapper::toModel);
+        return repository.save(UserMapper.MAPPER.toEntity(user))
+                .map(UserMapper.MAPPER::toModel);
 
     }
 
