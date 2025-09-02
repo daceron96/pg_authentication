@@ -27,7 +27,6 @@ public class PostgreSQLConnectionPool {
                 .schema("public")
                 .username("admin_db")
                 .password("960311")
-                .sslMode(SSLMode.REQUIRE)
                 .build();
 
         ConnectionPoolConfiguration poolConfiguration = ConnectionPoolConfiguration.builder()

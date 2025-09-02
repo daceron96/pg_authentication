@@ -6,6 +6,7 @@ import co.com.bancolombia.model.user.gateways.UserRepositoryGetaway;
 import co.com.bancolombia.r2dbc.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Component
@@ -21,4 +22,9 @@ public class UserAdapter implements UserRepositoryGetaway {
 
     }
 
+    @Override
+    public Flux<User> findAll() {
+        return repository.findAll()
+                .map(UserMapper.MAPPER::toModel);
+    }
 }
