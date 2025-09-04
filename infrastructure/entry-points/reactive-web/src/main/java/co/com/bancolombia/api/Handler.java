@@ -1,5 +1,8 @@
 package co.com.bancolombia.api;
 
+import co.com.bancolombia.api.dto.request.UserRequestDTO;
+import co.com.bancolombia.api.mapper.UserRequestMapper;
+import co.com.bancolombia.api.validator.ValidatorFactory;
 import co.com.bancolombia.model.user.User;
 import co.com.bancolombia.usecase.createuser.CreateUserUseCase;
 import co.com.bancolombia.usecase.createuser.ListUsersUseCase;
@@ -14,12 +17,17 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class Handler {
 
-    private final CreateUserUseCase createUserUseCase;
     private final ListUsersUseCase listUsersUseCase;
+    private final ValidatorFactory validatorFactory;
+    private final CreateUserUseCase createUserUseCase;
+    private final UserRequestMapper userRequestMapper;
 
     public Mono<ServerResponse> listenPOSTUseCase(ServerRequest serverRequest) {
+
         return serverRequest
-                .bodyToMono(User.class)
+                .bodyToMono(UserRequestDTO.class)
+                .doOnNext(validatorFactory::validateRequest)
+                .map(userRequestMapper::toModel)
                 .flatMap(createUserUseCase::execute)
                 .flatMap(userCreated -> ServerResponse
                         .status(HttpStatus.CREATED)
